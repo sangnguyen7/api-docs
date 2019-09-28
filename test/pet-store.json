@@ -252,6 +252,56 @@
                     "required": true
                 }
             ]
+        },
+        "/testapi": {
+            "summary": "this is an summary",
+            "description": "This is a description",
+            "servers": [
+                {
+                    "url": "http://localhost:8080/graphql",
+                    "description": ""
+                }
+            ],
+            "get": {
+                "responses": {
+                    "200": {
+
+                    }
+                },
+                "summary": "this is a GET"
+            },
+            "post": {
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "examples": {
+                                "Post body example": {
+                                    "value": {
+                                        "test": "test"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "examples": {
+                                    "Post response example": {
+                                        "value": "Hello World!!"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
