@@ -1,0 +1,243 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Enterprise Config Framework APIs",
+        "version": "1.0.0",
+        "description": "This is the Enterprise Config Framework"
+    },
+    "basePath": "/",
+    "schemes": [
+        "http"
+    ],
+    "paths": {
+        "/api/config": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Config"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Url not found"
+                    },
+                    "405": {
+                        "description": "Validation exception"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                },
+                "operationId": "getConfig",
+                "summary": "Get an existing config including Data and Structure config test",
+                "description": ""
+            },
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Config"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "description": "Config object that needs to be added",
+                        "schema": {
+                            "$ref": "#/definitions/PostConfig"
+                        },
+                        "in": "body",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResponse"
+                        }
+                    },
+                    "405": {
+                        "description": "Invalid input"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                },
+                "operationId": "upSertConfig",
+                "summary": "UpSert a/new config to ECF",
+                "description": ""
+            }
+        },
+        "/api/get_config": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Data Config"
+                ],
+                "parameters": [
+                    {
+                        "name": "configId",
+                        "description": "An unique configid e.g <configType>_<plantId>_<customerId>",
+                        "in": "query",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "inherit",
+                        "description": "It is an optional param. inherit=yes means the data config's responses will be inherited. Otherwise, it returns what it is ",
+                        "in": "query",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResponse"
+                        }
+                    },
+                    "405": {
+                        "description": "Invalid input"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                },
+                "summary": "get a data config from ECF"
+            }
+        },
+        "/api/get_configs": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Data Config"
+                ],
+                "parameters": [
+                    {
+                        "name": "configIds",
+                        "description": "",
+                        "in": "query",
+                        "type": "array",
+                        "items": {
+
+                        }
+                    },
+                    {
+                        "name": "inherit",
+                        "description": "It is an optional param. inherit=yes means the data config's responses will be inherited. Otherwise, it returns what it is ",
+                        "in": "query",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResponse"
+                        }
+                    },
+                    "405": {
+                        "description": "Invalid input"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                },
+                "summary": "get all data config based on conditions"
+            }
+        }
+    },
+    "definitions": {
+        "Config": {
+            "type": "object",
+            "properties": {
+                "configType": {
+                    "type": "string"
+                },
+                "customerId": {
+                    "type": "string"
+                },
+                "plantId": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string",
+                    "example": [
+                        "DATA",
+                        "STRUCTURE"
+                    ]
+                }
+            }
+        },
+        "PostConfig": {
+            "type": "object",
+            "properties": {
+                "configType": {
+                    "type": "string"
+                },
+                "customerId": {
+                    "type": "string"
+                },
+                "plantId": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string",
+                    "example": [
+                        "DATA",
+                        "STRUCTURE"
+                    ]
+                },
+                "data": {
+                    "type": "object"
+                }
+            }
+        },
+        "ApiResponse": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "format": "int32",
+                    "type": "string"
+                },
+                "return": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Config"
+                    }
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Config",
+            "description": "Operations about Config"
+        },
+        {
+            "name": "Data Config",
+            "description": "Operations about data config"
+        }
+    ]
+}
